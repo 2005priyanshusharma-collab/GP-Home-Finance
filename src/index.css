@@ -56,3 +56,14 @@ body {
     @apply text-lg text-gray-600 mb-8;
   }
 }
+/* Optional */
+::-webkit-scrollbar {
+  height: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+html {
+  scroll-behavior: smooth;
+}

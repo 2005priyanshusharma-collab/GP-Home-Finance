@@ -149,7 +149,7 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Services Section */}
-      <section className="py-20">
+       <section id="services" className="bg-gray-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="section-title">Our Loan Services</h2>
@@ -231,10 +231,10 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Partner Banks Section */}
-      <section className="py-20">
+      <section id = 'Banks' className="py-20">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="text-center mb-12">
-      <h2 className="section-title">Our Partner Banks</h2>
+      <h2 className="section-title">Our Banking Partner</h2>
       <p className="section-subtitle">
         We work with India's leading banks to bring you the best loan offers.
       </p>
@@ -250,7 +250,9 @@ const LandingPage: React.FC = () => {
         { name: 'Bajaj', link: 'https://www.bajajfinserv.in/home-loan-fresh-form?utm_source=BFLGOOGLESEARCHMKTG&utm_medium=cpc&utm_campaign=DPPM_HL_OB_ARM_Search_Open_Brand_Ex_BHL_Core&gad_source=1&gad_campaignid=21009029030&gbraid=0AAAAADgxadmHZ04OAPG-TCbcmD3GMMXd6&gclid=Cj0KCQjw9-PNBhDfARIsABHN6-0m1TT0yZcc5giehxOSH7D-Cij0Talhw9vDtKCIahL8dH3MDzdFGbgaAgaaEALw_wcB' },
         { name: 'Tata', link: 'https://www.tatacapital.com/home-loan.html' },
         { name: 'Kotak', link: 'https://www.kotak.bank.in/en/personal-banking/loans/home-loan.html' },
-        { name: 'PNB Housing', link: 'https://www.pnbhousing.com/' }
+        { name: 'PNB Housing', link: 'https://www.pnbhousing.com/' },
+        { name: 'YES Bank', link: 'https://www.yes.bank.in/personal-banking/yes-individual/loans/home-loan' },
+        { name: 'SBI Bank', link: 'https://homeloans.sbi.bank.in/' }
       ].map((bank, index) => (
         <div
           key={index}

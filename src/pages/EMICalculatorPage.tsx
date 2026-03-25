@@ -224,31 +224,31 @@ const EMICalculatorPage: React.FC = () => {
             </div>
 
             {/* Summary Cards */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-1 gap-4 mb-6">
               <div className="card">
-                <div className="flex items-center space-x-3">
+                <div className="flex items-justify space-x-0.1">
                   <div className="bg-blue-100 p-3 rounded-lg">
                     <IndianRupee className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
                     <p className="text-gray-600 text-sm">Principal Amount</p>
-                    <p className="text-xl font-bold text-gray-900">{formatCurrency(loanAmount)}</p>
+                    <p className="text-x1 font-bold text-gray-900">{formatCurrency(loanAmount)} </p>
                   </div>
                 </div>
               </div>
               <div className="card">
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-1">
                   <div className="bg-orange-100 p-3 rounded-lg">
                     <TrendingUp className="w-6 h-6 text-orange-600" />
                   </div>
                   <div>
                     <p className="text-gray-600 text-sm">Total Interest</p>
-                    <p className="text-xl font-bold text-gray-900">{formatCurrency(totalInterest)}</p>
+                    <p className="text-x1 font-bold text-gray-900">{formatCurrency(totalInterest)}</p>
                   </div>
                 </div>
               </div>
               <div className="card">
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-1">
                   <div className="bg-green-100 p-3 rounded-lg">
                     <Percent className="w-6 h-6 text-green-600" />
                   </div>
