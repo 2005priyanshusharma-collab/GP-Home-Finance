@@ -33,7 +33,7 @@ export type LoanType =
   | 'Personal_loan'
   | 'top-up_loan'
   | 'balance_transfer'
-  | 'loan_against_property';
+  | 'Commercial_loan';
 
 export type EmploymentType =
   | 'salaried'
