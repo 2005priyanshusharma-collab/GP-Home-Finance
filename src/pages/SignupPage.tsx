@@ -24,50 +24,62 @@ const SignupPage: React.FC = () => {
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setError(null);
+    e.preventDefault();
+    setError(null);
 
-  if (password !== confirmPassword) {
-    setError('Passwords do not match');
-    return;
-  }
-  if (!passwordRequirements.every(req => req.valid)) {
-    setError('Password does not meet all requirements');
-    return;
-  }
-
-  setLoading(true);
-
-  try {
-    const { data, error } = await signUp(email, password, fullName);
-
-    if (error) {
-      setError(error.message || 'Failed to create account. Please try again.');
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    if (!passwordRequirements.every(req => req.valid)) {
+      setError('Password does not meet all requirements');
       return;
     }
 
-    if (!data) {
-      setError('No response from server. Please try again.'); // ✅ guard null data
-      return;
-    }
+    setLoading(true);
+    console.log('Starting signup...');
 
-    const user = data.user;
-    const session = data.session ?? null;
+    try {
+      const result = await signUp(email, password, fullName);
+      console.log('Signup result:', result);
 
-    if (user && !session) {
-      setSuccess(true);
-      return;
-    }
+      if (result.error) {
+        console.error('Signup error:', result.error);
+        setError(result.error.message || 'Failed to create account. Please try again.');
+        return;
+      }
 
-    if (session) {
-      navigate('/dashboard');
+      if (!result.data) {
+        console.error('No data returned');
+        setError('No response from server. Please try again.');
+        return;
+      }
+
+      const user = result.data.user;
+      const session = result.data.session;
+
+      console.log('User:', user ? 'exists' : 'null');
+      console.log('Session:', session ? 'exists' : 'null');
+
+      // If user exists but no session, email confirmation is required
+      if (user && !session) {
+        console.log('Email confirmation required, showing success message');
+        setSuccess(true);
+        return;
+      }
+
+      // If session exists, user is auto-confirmed and logged in
+      if (session) {
+        console.log('User auto-confirmed, redirecting to dashboard');
+        navigate('/dashboard');
+      }
+    } catch (err: any) {
+      console.error('Signup exception:', err);
+      setError(err?.message || 'An unexpected error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
-  } catch (err: any) {
-    setError(err?.message || 'An unexpected error occurred. Please try again.');
-  } finally {
-    setLoading(false); // ✅ always runs
-  }
-};
+  };
   if (success) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center bg-gray-50 py-12 px-4">
