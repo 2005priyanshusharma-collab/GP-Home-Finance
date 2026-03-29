@@ -24,50 +24,50 @@ const SignupPage: React.FC = () => {
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
+  e.preventDefault();
+  setError(null);
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
+  if (password !== confirmPassword) {
+    setError('Passwords do not match');
+    return;
+  }
+  if (!passwordRequirements.every(req => req.valid)) {
+    setError('Password does not meet all requirements');
+    return;
+  }
 
-    if (!passwordRequirements.every(req => req.valid)) {
-      setError('Password does not meet all requirements');
-      return;
-    }
+  setLoading(true);
 
-    setLoading(true);
-
-    try {
+  try {
     const { data, error } = await signUp(email, password, fullName);
 
-if (error) {
-  setError(error.message || 'Failed to create account. Please try again.');
-  return;
-}
-
-// ✅ Safe destructuring
-const user = data?.user;
-const session = data?.session ?? null;
-
-// 🔥 Case 1: Email verification required
-if (user && !session) {
-  setSuccess(true);
-  return;
-}
-
-// 🔥 Case 2: Instant login
-if (session) {
-  navigate('/dashboard');
-}
-    } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
-    } finally {
-      setLoading(false);
+    if (error) {
+      setError(error.message || 'Failed to create account. Please try again.');
+      return;
     }
-  };
 
+    if (!data) {
+      setError('No response from server. Please try again.'); // ✅ guard null data
+      return;
+    }
+
+    const user = data.user;
+    const session = data.session ?? null;
+
+    if (user && !session) {
+      setSuccess(true);
+      return;
+    }
+
+    if (session) {
+      navigate('/dashboard');
+    }
+  } catch (err: any) {
+    setError(err?.message || 'An unexpected error occurred. Please try again.');
+  } finally {
+    setLoading(false); // ✅ always runs
+  }
+};
   if (success) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center bg-gray-50 py-12 px-4">

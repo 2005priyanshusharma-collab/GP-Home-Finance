@@ -66,34 +66,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const handleSignUp = async (email: string, password: string, fullName: string) => {
-    try {
-     
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: { full_name: fullName },
-    },
-  });
+  try {
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('Request timed out. Please try again.')), 10000)
+    );
 
-  return { data, error }; 
+    const signUpPromise = supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: fullName } },
+    });
 
-    } catch (err) {
-      return { error: err as Error };
-    }
-  };
+    const { data, error } = await Promise.race([signUpPromise, timeoutPromise]);
+    return { data: data ?? null, error };
+  } catch (err) {
+    return { data: null, error: err as Error }; // ✅ always return data
+  }
+};
 
-  const handleSignIn = async (email: string, password: string) => {
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      return { error: error as Error | null };
-    } catch (err) {
-      return { error: err as Error };
-    }
-  };
+const handleSignIn = async (email: string, password: string) => {
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    return { data: data ?? null, error }; // ✅ return data too
+  } catch (err) {
+    return { data: null, error: err as Error };
+  }
+};
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
