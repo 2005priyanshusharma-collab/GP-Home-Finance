@@ -83,7 +83,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         password,
         options: {
           data: { full_name: fullName },
-          emailRedirectTo: `${window.location.origin}/login`
+          emailRedirectTo: 'https://www.gphomefinance.com/login'
         },
       });
 
