@@ -66,32 +66,65 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const handleSignUp = async (email: string, password: string, fullName: string) => {
-  try {
-    const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error('Request timed out. Please try again.')), 10000)
-    );
+    try {
+      // Check if Supabase is configured
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-    const signUpPromise = supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { full_name: fullName } },
-    });
+      if (!supabaseUrl || !supabaseAnonKey) {
+        return {
+          data: null,
+          error: new Error('Supabase is not configured. Please contact support.')
+        };
+      }
 
-    const { data, error } = await Promise.race([signUpPromise, timeoutPromise]);
-    return { data: data ?? null, error };
-  } catch (err) {
-    return { data: null, error: err as Error }; // ✅ always return data
-  }
-};
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { full_name: fullName },
+          emailRedirectTo: `${window.location.origin}/login`
+        },
+      });
 
-const handleSignIn = async (email: string, password: string) => {
-  try {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    return { data: data ?? null, error }; // ✅ return data too
-  } catch (err) {
-    return { data: null, error: err as Error };
-  }
-};
+      if (error) {
+        console.error('Signup error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data: data ?? null, error: null };
+    } catch (err) {
+      console.error('Signup exception:', err);
+      return { data: null, error: err as Error };
+    }
+  };
+
+  const handleSignIn = async (email: string, password: string) => {
+    try {
+      // Check if Supabase is configured
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+      if (!supabaseUrl || !supabaseAnonKey) {
+        return {
+          data: null,
+          error: new Error('Supabase is not configured. Please contact support.')
+        };
+      }
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        console.error('Signin error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data: data ?? null, error: null };
+    } catch (err) {
+      console.error('Signin exception:', err);
+      return { data: null, error: err as Error };
+    }
+  };
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
