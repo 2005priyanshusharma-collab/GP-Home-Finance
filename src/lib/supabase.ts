@@ -2,8 +2,12 @@ import { createClient } from '@supabase/supabase-js';
 
 // Supabase configuration
 // Replace these with your actual Supabase project credentials
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL ;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY ;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error("Supabase environment variables are missing");
+}
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -20,6 +24,7 @@ export const signUp = async (email: string, password: string, fullName: string) 
   });
   return { data, error };
 };
+
 
 export const signIn = async (email: string, password: string) => {
   const { data, error } = await supabase.auth.signInWithPassword({
