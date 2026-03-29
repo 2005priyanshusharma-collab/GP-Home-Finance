@@ -40,13 +40,27 @@ const SignupPage: React.FC = () => {
     setLoading(true);
 
     try {
-      const { error } = await signUp(email, password, fullName);
-      if (error) {
-        setError(error.message || 'Failed to create account. Please try again.');
-      } else {
-        setSuccess(true);
-        setTimeout(() => navigate('/login'), 3000);
-      }
+    const { data, error } = await signUp(email, password, fullName);
+
+if (error) {
+  setError(error.message || 'Failed to create account. Please try again.');
+  return;
+}
+
+// ✅ Safe destructuring
+const user = data?.user;
+const session = data?.session ?? null;
+
+// 🔥 Case 1: Email verification required
+if (user && !session) {
+  setSuccess(true);
+  return;
+}
+
+// 🔥 Case 2: Instant login
+if (session) {
+  navigate('/dashboard');
+}
     } catch (err) {
       setError('An unexpected error occurred. Please try again.');
     } finally {

@@ -1,5 +1,4 @@
 import { createClient } from '@supabase/supabase-js';
-
 // Supabase configuration
 // Replace these with your actual Supabase project credentials
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL ;
@@ -11,8 +10,12 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Auth helper functions
-export const signUp = async (email: string, password: string, fullName: string) => {
+
+export const signUp = async (
+  email: string,
+  password: string,
+  fullName: string
+) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -22,7 +25,8 @@ export const signUp = async (email: string, password: string, fullName: string) 
       },
     },
   });
-  return { data, error };
+
+  return { data, error }; // ✅ MUST return data
 };
 
 

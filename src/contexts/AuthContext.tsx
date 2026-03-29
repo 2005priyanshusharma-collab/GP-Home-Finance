@@ -1,12 +1,35 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import type { User } from '@supabase/supabase-js';
+import type { User, Session } from '@supabase/supabase-js';
 import { supabase, getCurrentUser } from '../lib/supabase';
+
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  signUp: (email: string, password: string, fullName: string) => Promise<{ error: Error | null }>;
-  signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
+
+  signUp: (
+    email: string,
+    password: string,
+    fullName: string
+  ) => Promise<{
+    data: {
+      user: User | null;
+      session: Session | null;
+    } | null;
+    error: Error | null;
+  }>;
+
+  signIn: (
+    email: string,
+    password: string
+  ) => Promise<{
+    data: {
+      user: User | null;
+      session: Session | null;
+    } | null;
+    error: Error | null;
+  }>;
+
   signOut: () => Promise<void>;
 }
 
@@ -44,16 +67,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const handleSignUp = async (email: string, password: string, fullName: string) => {
     try {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: fullName,
-          },
-        },
-      });
-      return { error: error as Error | null };
+     
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { full_name: fullName },
+    },
+  });
+
+  return { data, error }; 
+
     } catch (err) {
       return { error: err as Error };
     }
