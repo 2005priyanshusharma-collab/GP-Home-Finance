@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import {
@@ -17,8 +17,15 @@ import {
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSignOut = async () => {
     await signOut();
@@ -43,32 +50,40 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? 'bg-white/95 backdrop-blur-md border-b border-neutral-200'
+          : 'bg-white border-b border-transparent'
+      }`}
+    >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="bg-gradient-to-r from-primary-600 to-primary-800 text-white px-3 py-1 rounded-lg">
-              <span className="font-bold text-xl">GP</span>
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="bg-primary-600 text-white px-3 py-1.5 rounded transition-all duration-300 group-hover:bg-primary-700">
+              <span className="font-semibold text-lg tracking-wide">GP</span>
             </div>
-            <span className="font-semibold text-gray-900 text-lg hidden sm:block">
-              Home Finance
-            </span>
+            <div className="hidden sm:flex flex-col">
+              <span className="font-medium text-primary-600 text-sm tracking-widest uppercase">
+                Home Finance
+              </span>
+            </div>
           </Link>
 
-          {/* Desktop Navigation — hidden on mobile */}
-          <div className="hidden md:flex items-center space-x-6">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link, index) => {
               if (link.type === 'scroll') {
                 return (
                   <button
                     key={index}
                     onClick={() => scrollToSection(link.id!)}
-                    className="text-gray-600 hover:text-primary-600 font-medium transition-colors flex items-center space-x-1"
+                    className="text-neutral-500 hover:text-primary-600 font-normal text-sm tracking-wide transition-colors duration-300 relative group"
                   >
-                    <link.icon className="w-4 h-4" />
                     <span>{link.name}</span>
+                    <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary-600 transition-all duration-300 group-hover:w-full" />
                   </button>
                 );
               }
@@ -76,62 +91,63 @@ const Header: React.FC = () => {
                 <Link
                   key={index}
                   to={link.path!}
-                  className="text-gray-600 hover:text-primary-600 font-medium transition-colors flex items-center space-x-1"
+                  className="text-neutral-500 hover:text-primary-600 font-normal text-sm tracking-wide transition-colors duration-300 relative group"
                 >
-                  <link.icon className="w-4 h-4" />
                   <span>{link.name}</span>
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary-600 transition-all duration-300 group-hover:w-full" />
                 </Link>
               );
             })}
           </div>
 
-          {/* Desktop Auth Buttons — hidden on mobile */}
+          {/* Desktop Auth */}
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
               <div className="flex items-center space-x-4">
                 <Link
                   to="/dashboard"
-                  className="text-gray-600 hover:text-primary-600 font-medium flex items-center space-x-1"
+                  className="text-neutral-500 hover:text-primary-600 text-sm font-normal tracking-wide transition-colors duration-300"
                 >
-                  <LayoutDashboard className="w-4 h-4" />
-                  <span>Dashboard</span>
+                  Dashboard
                 </Link>
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center space-x-1 text-gray-600 hover:text-red-600"
+                  className="text-neutral-400 hover:text-red-600 text-sm transition-colors duration-300"
                 >
-                  <LogOut className="w-4 h-4" />
-                  <span>Sign Out</span>
+                  Sign Out
                 </button>
               </div>
             ) : (
               <div className="flex items-center space-x-4">
                 <Link
                   to="/login"
-                  className="text-gray-600 hover:text-primary-600 font-medium flex items-center space-x-1"
+                  className="text-neutral-500 hover:text-primary-600 text-sm font-normal tracking-wide transition-colors duration-300"
                 >
-                  <User className="w-4 h-4" />
-                  <span>Login</span>
+                  Login
                 </Link>
-                <Link to="/signup" className="btn-primary">
+                <Link to="/signup" className="btn-primary text-sm py-2 px-6">
                   Get Started
                 </Link>
               </div>
             )}
           </div>
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile Hamburger */}
           <button
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+            className="md:hidden p-2 rounded-lg hover:bg-surface-100 transition-colors duration-300"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMenuOpen ? <X className="w-5 h-5 text-primary-600" /> : <Menu className="w-5 h-5 text-primary-600" />}
           </button>
         </div>
 
-        {/* Mobile Menu — all links including scroll ones */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t">
+        {/* Mobile Menu */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-400 ease-out ${
+            isMenuOpen ? 'max-h-[500px] opacity-100 pb-4' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="border-t border-neutral-200 pt-4">
             <div className="flex flex-col space-y-1">
               {navLinks.map((link, index) => {
                 if (link.type === 'scroll') {
@@ -139,9 +155,9 @@ const Header: React.FC = () => {
                     <button
                       key={index}
                       onClick={() => scrollToSection(link.id!)}
-                      className="text-left text-gray-600 hover:text-primary-600 font-medium flex items-center space-x-2 py-3 px-2 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="text-left text-neutral-600 hover:text-primary-600 font-normal text-sm tracking-wide flex items-center space-x-3 py-3 px-3 rounded-lg hover:bg-surface-100 transition-all duration-300"
                     >
-                      <link.icon className="w-5 h-5" />
+                      <link.icon className="w-4 h-4" />
                       <span>{link.name}</span>
                     </button>
                   );
@@ -150,25 +166,24 @@ const Header: React.FC = () => {
                   <Link
                     key={index}
                     to={link.path!}
-                    className="text-gray-600 hover:text-primary-600 font-medium flex items-center space-x-2 py-3 px-2 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="text-neutral-600 hover:text-primary-600 font-normal text-sm tracking-wide flex items-center space-x-3 py-3 px-3 rounded-lg hover:bg-surface-100 transition-all duration-300"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <link.icon className="w-5 h-5" />
+                    <link.icon className="w-4 h-4" />
                     <span>{link.name}</span>
                   </Link>
                 );
               })}
 
-              {/* Auth links in mobile menu */}
-              <div className="border-t pt-3 mt-2">
+              <div className="border-t border-neutral-200 pt-3 mt-2">
                 {user ? (
                   <>
                     <Link
                       to="/dashboard"
-                      className="text-gray-600 hover:text-primary-600 font-medium flex items-center space-x-2 py-3 px-2 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="text-neutral-600 hover:text-primary-600 font-normal text-sm flex items-center space-x-3 py-3 px-3 rounded-lg hover:bg-surface-100 transition-all duration-300"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      <LayoutDashboard className="w-5 h-5" />
+                      <LayoutDashboard className="w-4 h-4" />
                       <span>Dashboard</span>
                     </Link>
                     <button
@@ -176,9 +191,9 @@ const Header: React.FC = () => {
                         handleSignOut();
                         setIsMenuOpen(false);
                       }}
-                      className="w-full text-left text-gray-600 hover:text-red-600 font-medium flex items-center space-x-2 py-3 px-2 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="w-full text-left text-neutral-500 hover:text-red-600 font-normal text-sm flex items-center space-x-3 py-3 px-3 rounded-lg hover:bg-surface-100 transition-all duration-300"
                     >
-                      <LogOut className="w-5 h-5" />
+                      <LogOut className="w-4 h-4" />
                       <span>Sign Out</span>
                     </button>
                   </>
@@ -186,15 +201,15 @@ const Header: React.FC = () => {
                   <>
                     <Link
                       to="/login"
-                      className="text-gray-600 hover:text-primary-600 font-medium flex items-center space-x-2 py-3 px-2 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="text-neutral-600 hover:text-primary-600 font-normal text-sm flex items-center space-x-3 py-3 px-3 rounded-lg hover:bg-surface-100 transition-all duration-300"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      <User className="w-5 h-5" />
+                      <User className="w-4 h-4" />
                       <span>Login</span>
                     </Link>
                     <Link
                       to="/signup"
-                      className="btn-primary text-center block mt-2 mx-2"
+                      className="btn-primary text-center block mt-2 mx-3 text-sm"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Get Started
@@ -204,7 +219,7 @@ const Header: React.FC = () => {
               </div>
             </div>
           </div>
-        )}
+        </div>
       </nav>
     </header>
   );

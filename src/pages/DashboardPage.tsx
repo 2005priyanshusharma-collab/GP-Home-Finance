@@ -15,13 +15,13 @@ import {
   AlertCircle
 } from 'lucide-react';
 
-const statusColors: Record<ApplicationStatus, { bg: string; text: string; icon: typeof Clock }> = {
-  pending: { bg: 'bg-yellow-100', text: 'text-yellow-700', icon: Clock },
-  under_review: { bg: 'bg-blue-100', text: 'text-blue-700', icon: AlertCircle },
-  documents_required: { bg: 'bg-orange-100', text: 'text-orange-700', icon: FileText },
-  approved: { bg: 'bg-green-100', text: 'text-green-700', icon: CheckCircle },
-  rejected: { bg: 'bg-red-100', text: 'text-red-700', icon: XCircle },
-  disbursed: { bg: 'bg-purple-100', text: 'text-purple-700', icon: CheckCircle },
+const statusColors: Record<ApplicationStatus, { bg: string; text: string; border: string; icon: typeof Clock }> = {
+  pending: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', icon: Clock },
+  under_review: { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', icon: AlertCircle },
+  documents_required: { bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200', icon: FileText },
+  approved: { bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-200', icon: CheckCircle },
+  rejected: { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200', icon: XCircle },
+  disbursed: { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', icon: CheckCircle },
 };
 
 const statusLabels: Record<ApplicationStatus, string> = {
@@ -97,101 +97,83 @@ const DashboardPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      <div className="min-h-screen bg-surface-50 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-surface-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10 animate-fade-in">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-600 mt-1">
-              Welcome back, {user?.user_metadata?.full_name || user?.email}
+            <p className="text-accent-600 text-xs font-medium tracking-[0.2em] uppercase mb-2">Dashboard</p>
+            <h1 className="text-3xl font-light text-primary-600 tracking-tight">
+              Welcome back
+            </h1>
+            <p className="text-neutral-500 mt-1 text-sm">
+              {user?.user_metadata?.full_name || user?.email}
             </p>
           </div>
-          <Link to="/apply" className="btn-primary mt-4 md:mt-0 inline-flex items-center">
-            <Plus className="w-5 h-5 mr-2" />
+          <Link to="/apply" className="btn-primary mt-4 md:mt-0 inline-flex items-center text-sm">
+            <Plus className="w-4 h-4 mr-2" />
             New Application
           </Link>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="card">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-600 text-sm">Total Applications</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.total}</p>
-              </div>
-              <div className="bg-primary-100 p-3 rounded-lg">
-                <FileText className="w-6 h-6 text-primary-600" />
-              </div>
-            </div>
-          </div>
-
-          <div className="card">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-600 text-sm">Pending</p>
-                <p className="text-3xl font-bold text-yellow-600">{stats.pending}</p>
-              </div>
-              <div className="bg-yellow-100 p-3 rounded-lg">
-                <Clock className="w-6 h-6 text-yellow-600" />
-              </div>
-            </div>
-          </div>
-
-          <div className="card">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-600 text-sm">Approved</p>
-                <p className="text-3xl font-bold text-green-600">{stats.approved}</p>
-              </div>
-              <div className="bg-green-100 p-3 rounded-lg">
-                <CheckCircle className="w-6 h-6 text-green-600" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+          {[
+            { label: 'Total Applications', value: stats.total, icon: FileText, color: 'text-primary-600', bg: 'bg-surface-100' },
+            { label: 'Pending', value: stats.pending, icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50' },
+            { label: 'Approved', value: stats.approved, icon: CheckCircle, color: 'text-green-600', bg: 'bg-green-50' },
+            { label: 'Total Loan Amount', value: formatCurrency(stats.totalAmount), icon: TrendingUp, color: 'text-accent-600', bg: 'bg-accent-50' },
+          ].map((stat, index) => (
+            <div
+              key={index}
+              className="card animate-fade-in-up"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-neutral-500 text-xs tracking-wide">{stat.label}</p>
+                  <p className={`text-2xl font-light mt-1 tracking-tight ${stat.label === 'Total Loan Amount' ? 'text-xl' : ''} text-primary-600`}>
+                    {stat.value}
+                  </p>
+                </div>
+                <div className={`${stat.bg} p-3 rounded-lg`}>
+                  <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="card">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-600 text-sm">Total Loan Amount</p>
-                <p className="text-2xl font-bold text-gray-900">{formatCurrency(stats.totalAmount)}</p>
-              </div>
-              <div className="bg-green-100 p-3 rounded-lg">
-                <TrendingUp className="w-6 h-6 text-green-600" />
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Applications List */}
-        <div className="card">
+        <div className="card animate-fade-in-up animate-stagger-4">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Your Applications</h2>
+            <h2 className="text-lg font-medium text-primary-600 tracking-tight">Your Applications</h2>
           </div>
 
           {error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
               {error}
             </div>
           )}
 
           {applications.length === 0 ? (
-            <div className="text-center py-12">
-              <FileText className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No applications yet</h3>
-              <p className="text-gray-600 mb-4">
+            <div className="text-center py-16 animate-fade-in">
+              <div className="w-16 h-16 rounded-full border border-neutral-200 flex items-center justify-center mx-auto mb-5">
+                <FileText className="w-6 h-6 text-neutral-300" />
+              </div>
+              <h3 className="text-lg font-light text-primary-600 mb-2">No applications yet</h3>
+              <p className="text-neutral-500 text-sm mb-6">
                 Start your home loan journey by submitting your first application.
               </p>
-              <Link to="/apply" className="btn-primary inline-flex items-center">
-                <Plus className="w-5 h-5 mr-2" />
+              <Link to="/apply" className="btn-primary inline-flex items-center text-sm">
+                <Plus className="w-4 h-4 mr-2" />
                 Apply for Loan
               </Link>
             </div>
@@ -199,52 +181,52 @@ const DashboardPage: React.FC = () => {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 font-medium text-gray-600">Application ID</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-600">Loan Type</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-600">Amount</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-600">Status</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-600">Date</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-600">Action</th>
+                  <tr className="border-b border-neutral-200">
+                    <th className="text-left py-3 px-4 font-medium text-neutral-500 text-xs tracking-widest uppercase">ID</th>
+                    <th className="text-left py-3 px-4 font-medium text-neutral-500 text-xs tracking-widest uppercase">Loan Type</th>
+                    <th className="text-left py-3 px-4 font-medium text-neutral-500 text-xs tracking-widest uppercase">Amount</th>
+                    <th className="text-left py-3 px-4 font-medium text-neutral-500 text-xs tracking-widest uppercase">Status</th>
+                    <th className="text-left py-3 px-4 font-medium text-neutral-500 text-xs tracking-widest uppercase">Date</th>
+                    <th className="text-left py-3 px-4 font-medium text-neutral-500 text-xs tracking-widest uppercase">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {applications.map((application) => {
                     const StatusIcon = statusColors[application.status]?.icon || Clock;
                     return (
-                      <tr key={application.id} className="border-b border-gray-100 hover:bg-gray-50">
+                      <tr key={application.id} className="border-b border-neutral-100 hover:bg-surface-50 transition-colors duration-200">
                         <td className="py-4 px-4">
-                          <span className="font-mono text-sm text-gray-600">
+                          <span className="font-mono text-xs text-neutral-500">
                             {application.id.slice(0, 8).toUpperCase()}
                           </span>
                         </td>
                         <td className="py-4 px-4">
-                          <span className="font-medium text-gray-900">
+                          <span className="font-medium text-primary-600 text-sm">
                             {loanTypeLabels[application.loan_type] || application.loan_type}
                           </span>
                         </td>
                         <td className="py-4 px-4">
-                          <span className="flex items-center text-gray-900">
-                            <IndianRupee className="w-4 h-4 mr-1" />
+                          <span className="flex items-center text-sm text-neutral-700">
+                            <IndianRupee className="w-3.5 h-3.5 mr-1" />
                             {new Intl.NumberFormat('en-IN').format(application.loan_amount)}
                           </span>
                         </td>
                         <td className="py-4 px-4">
-                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm ${statusColors[application.status]?.bg} ${statusColors[application.status]?.text}`}>
-                            <StatusIcon className="w-4 h-4 mr-1" />
+                          <span className={`inline-flex items-center px-2.5 py-1 rounded text-xs font-medium border ${statusColors[application.status]?.bg} ${statusColors[application.status]?.text} ${statusColors[application.status]?.border}`}>
+                            <StatusIcon className="w-3 h-3 mr-1.5" />
                             {statusLabels[application.status]}
                           </span>
                         </td>
                         <td className="py-4 px-4">
-                          <span className="flex items-center text-gray-600">
-                            <Calendar className="w-4 h-4 mr-1" />
+                          <span className="flex items-center text-neutral-500 text-sm">
+                            <Calendar className="w-3.5 h-3.5 mr-1.5" />
                             {formatDate(application.created_at)}
                           </span>
                         </td>
                         <td className="py-4 px-4">
                           <Link
                             to={`/application/${application.id}`}
-                            className="text-primary-600 hover:text-primary-700 font-medium"
+                            className="text-accent-600 hover:text-accent-700 text-sm font-medium transition-colors duration-300"
                           >
                             View Details
                           </Link>

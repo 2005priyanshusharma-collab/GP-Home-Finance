@@ -5,10 +5,17 @@
 @tailwind utilities;
 
 :root {
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --secondary: #64748b;
-  --accent: #059669;
+  --primary: #1A1A2E;
+  --primary-light: #2D2D4A;
+  --accent: #C9A96E;
+  --accent-dark: #b08a4a;
+  --surface: #FAFAF8;
+  --surface-alt: #F5F5F0;
+  --text-primary: #2D2D3A;
+  --text-secondary: #6B7280;
+  --border: #E8E8E0;
+  --success: #4A7C59;
+  --error: #9B3B3B;
 }
 
 * {
@@ -25,45 +32,140 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--surface);
+  color: var(--text-primary);
 }
 
+/* ===== MINIMALIST COMPONENT LAYER ===== */
 @layer components {
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-8 rounded transition-all duration-300 ease-out;
+    letter-spacing: 0.025em;
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(26, 26, 46, 0.15);
   }
 
   .btn-secondary {
-    @apply bg-white hover:bg-gray-50 text-primary-600 font-semibold py-3 px-6 rounded-lg border-2 border-primary-600 transition-all duration-200;
+    @apply bg-transparent text-primary-600 font-medium py-3 px-8 rounded border border-primary-600 transition-all duration-300 ease-out;
+    letter-spacing: 0.025em;
+  }
+  .btn-secondary:hover {
+    @apply bg-primary-600 text-white;
+  }
+
+  .btn-accent {
+    @apply font-medium py-3 px-8 rounded transition-all duration-300 ease-out;
+    background-color: var(--accent);
+    color: var(--primary);
+    letter-spacing: 0.025em;
+  }
+  .btn-accent:hover {
+    background-color: var(--accent-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(201, 169, 110, 0.25);
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-lg p-6 border border-gray-100;
+    @apply bg-white rounded-lg p-6 border transition-all duration-300;
+    border-color: var(--border);
+  }
+  .card:hover {
+    border-color: #D1D1C6;
   }
 
   .input-field {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200;
+    @apply w-full px-4 py-3 rounded-lg border outline-none transition-all duration-300;
+    border-color: var(--border);
+    background-color: var(--surface);
+  }
+  .input-field:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(26, 26, 46, 0.08);
+    background-color: #fff;
   }
 
   .label {
-    @apply block text-sm font-medium text-gray-700 mb-2;
+    @apply block text-sm font-medium mb-2;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
   }
 
   .section-title {
-    @apply text-3xl md:text-4xl font-bold text-gray-900 mb-4;
+    @apply text-3xl md:text-4xl font-light mb-4;
+    color: var(--text-primary);
+    letter-spacing: -0.015em;
   }
 
   .section-subtitle {
-    @apply text-lg text-gray-600 mb-8;
+    @apply text-lg mb-8;
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+
+  /* Divider line - used instead of heavy shadows */
+  .divider {
+    @apply border-t;
+    border-color: var(--border);
   }
 }
-/* Optional */
+
+/* ===== ANIMATION UTILITIES ===== */
+.animate-stagger-1 { animation-delay: 0.1s; }
+.animate-stagger-2 { animation-delay: 0.2s; }
+.animate-stagger-3 { animation-delay: 0.3s; }
+.animate-stagger-4 { animation-delay: 0.4s; }
+.animate-stagger-5 { animation-delay: 0.5s; }
+.animate-stagger-6 { animation-delay: 0.6s; }
+
+/* Initial state for animated elements */
+[class*="animate-fade-in"],
+[class*="animate-fade-in-up"],
+[class*="animate-slide-in-right"],
+[class*="animate-scale-in"] {
+  opacity: 0;
+}
+
+/* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar {
+  width: 6px;
   height: 4px;
 }
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
 ::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: #D1D1C6;
   border-radius: 10px;
 }
-html {
-  scroll-behavior: smooth;
+::-webkit-scrollbar-thumb:hover {
+  background: #A3A397;
+}
+
+/* ===== SUBTLE SELECTION ===== */
+::selection {
+  background-color: rgba(201, 169, 110, 0.2);
+  color: var(--text-primary);
+}
+
+/* ===== RANGE SLIDER STYLING ===== */
+input[type="range"] {
+  @apply w-full h-1.5 rounded-lg appearance-none cursor-pointer;
+  background: var(--border);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary);
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
 }

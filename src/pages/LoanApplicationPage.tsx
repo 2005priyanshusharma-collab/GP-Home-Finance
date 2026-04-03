@@ -74,7 +74,7 @@ const LoanApplicationPage: React.FC = () => {
 
       case 2:
         if (!formData.loan_amount || parseInt(formData.loan_amount) < 100000) {
-          setError('Loan amount must be at least Rs 1 Lakh');
+          setError('Loan amount must be at least ₹1 Lakh');
           return false;
         }
         if (!formData.tenure_months || parseInt(formData.tenure_months) < 12) {
@@ -93,7 +93,7 @@ const LoanApplicationPage: React.FC = () => {
           return false;
         }
         if (!formData.monthly_income || parseInt(formData.monthly_income) < 10000) {
-          setError('Monthly income must be at least Rs 10,000');
+          setError('Monthly income must be at least ₹10,000');
           return false;
         }
         return true;
@@ -172,69 +172,77 @@ const LoanApplicationPage: React.FC = () => {
 
   if (success) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center bg-gray-50 py-12 px-4">
-        <div className="max-w-md w-full text-center">
-          <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="w-10 h-10 text-green-600" />
+      <div className="min-h-[80vh] flex items-center justify-center bg-surface-50 py-12 px-4">
+        <div className="max-w-md w-full text-center animate-scale-in">
+          <div className="w-20 h-20 rounded-full border-2 border-green-300 bg-green-50 flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="w-8 h-8 text-green-600" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Application Submitted!</h2>
-          <p className="text-gray-600 mb-4">
+          <h2 className="text-2xl font-light text-primary-600 mb-3 tracking-tight">Application Submitted</h2>
+          <p className="text-neutral-500 text-sm leading-relaxed mb-4">
             Your loan application has been submitted successfully. Our team will review it and contact you within 24-48 hours.
           </p>
-          <p className="text-sm text-gray-500">Redirecting to dashboard...</p>
+          <p className="text-xs text-neutral-400">Redirecting to dashboard...</p>
         </div>
       </div>
     );
   }
 
+  const stepLabels = ['Loan Type', 'Loan Details', 'Employment', 'Personal'];
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-surface-50 py-12">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Progress Steps */}
-        <div className="mb-8">
+        <div className="mb-10 animate-fade-in">
           <div className="flex items-center justify-between">
             {[1, 2, 3, 4].map((s) => (
               <div key={s} className="flex items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-medium text-sm border-2 transition-all duration-300 ${
                     step >= s
-                      ? 'bg-primary-600 text-white'
-                      : 'bg-gray-200 text-gray-600'
+                      ? 'bg-primary-600 border-primary-600 text-white'
+                      : 'bg-white border-neutral-200 text-neutral-400'
                   }`}
                 >
-                  {step > s ? <CheckCircle className="w-6 h-6" /> : s}
+                  {step > s ? <CheckCircle className="w-5 h-5" /> : s}
                 </div>
                 {s < 4 && (
                   <div
-                    className={`w-12 md:w-24 h-1 ${
-                      step > s ? 'bg-primary-600' : 'bg-gray-200'
+                    className={`w-12 md:w-24 h-px transition-colors duration-300 ${
+                      step > s ? 'bg-primary-600' : 'bg-neutral-200'
                     }`}
                   />
                 )}
               </div>
             ))}
           </div>
-          <div className="flex justify-between mt-2 text-sm">
-            <span className={step >= 1 ? 'text-primary-600 font-medium' : 'text-gray-400'}>Loan Type</span>
-            <span className={step >= 2 ? 'text-primary-600 font-medium' : 'text-gray-400'}>Loan Details</span>
-            <span className={step >= 3 ? 'text-primary-600 font-medium' : 'text-gray-400'}>Employment</span>
-            <span className={step >= 4 ? 'text-primary-600 font-medium' : 'text-gray-400'}>Personal</span>
+          <div className="flex justify-between mt-3 text-xs tracking-wide">
+            {stepLabels.map((label, index) => (
+              <span
+                key={label}
+                className={`transition-colors duration-300 ${
+                  step >= index + 1 ? 'text-primary-600 font-medium' : 'text-neutral-400'
+                }`}
+              >
+                {label}
+              </span>
+            ))}
           </div>
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className="card">
+          <div className="card animate-fade-in-up">
             {error && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
-                <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-3 text-red-700 text-sm">
+                <AlertCircle className="w-4 h-4 flex-shrink-0" />
                 <span>{error}</span>
               </div>
             )}
 
             {/* Step 1: Loan Type */}
             {step === 1 && (
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">Select Loan Type</h2>
+              <div className="animate-fade-in">
+                <h2 className="text-lg font-medium text-primary-600 mb-6 tracking-tight">Select Loan Type</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {loanTypes.map((type) => {
                     const Icon = type.icon;
@@ -243,31 +251,31 @@ const LoanApplicationPage: React.FC = () => {
                         key={type.value}
                         type="button"
                         onClick={() => setFormData(prev => ({ ...prev, loan_type: type.value }))}
-                        className={`p-4 rounded-lg border-2 text-left transition-all ${
+                        className={`p-5 rounded-lg border-2 text-left transition-all duration-300 ${
                           formData.loan_type === type.value
-                            ? 'border-primary-600 bg-primary-50'
-                            : 'border-gray-200 hover:border-primary-300'
+                            ? 'border-primary-600 bg-surface-50'
+                            : 'border-neutral-200 hover:border-neutral-300'
                         }`}
                       >
                         <div className="flex items-start space-x-3">
-                          <div className={`p-2 rounded-lg ${
+                          <div className={`p-2 rounded-lg transition-colors duration-300 ${
                             formData.loan_type === type.value
-                              ? 'bg-primary-100'
-                              : 'bg-gray-100'
+                              ? 'bg-primary-600 text-white'
+                              : 'bg-surface-100'
                           }`}>
-                            <Icon className={`w-5 h-5 ${
+                            <Icon className={`w-4 h-4 ${
                               formData.loan_type === type.value
-                                ? 'text-primary-600'
-                                : 'text-gray-600'
+                                ? 'text-white'
+                                : 'text-neutral-500'
                             }`} />
                           </div>
                           <div>
-                            <p className={`font-medium ${
+                            <p className={`font-medium text-sm transition-colors duration-300 ${
                               formData.loan_type === type.value
                                 ? 'text-primary-600'
-                                : 'text-gray-900'
+                                : 'text-neutral-700'
                             }`}>{type.label}</p>
-                            <p className="text-sm text-gray-500">{type.description}</p>
+                            <p className="text-xs text-neutral-400 mt-0.5">{type.description}</p>
                           </div>
                         </div>
                       </button>
@@ -279,13 +287,13 @@ const LoanApplicationPage: React.FC = () => {
 
             {/* Step 2: Loan Details */}
             {step === 2 && (
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">Loan Details</h2>
+              <div className="animate-fade-in">
+                <h2 className="text-lg font-medium text-primary-600 mb-6 tracking-tight">Loan Details</h2>
                 <div className="space-y-6">
                   <div>
-                    <label className="label">Loan Amount (Rs)</label>
+                    <label className="label">Loan Amount (₹)</label>
                     <div className="relative">
-                      <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <IndianRupee className="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
                       <input
                         type="number"
                         name="loan_amount"
@@ -297,7 +305,7 @@ const LoanApplicationPage: React.FC = () => {
                         required
                       />
                     </div>
-                    <p className="mt-1 text-sm text-gray-500">Minimum: Rs 1 Lakh</p>
+                    <p className="mt-1.5 text-xs text-neutral-400">Minimum: ₹1 Lakh</p>
                   </div>
 
                   <div>
@@ -344,9 +352,9 @@ const LoanApplicationPage: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <label className="label">Property Value (Rs)</label>
+                        <label className="label">Property Value (₹)</label>
                         <div className="relative">
-                          <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                          <IndianRupee className="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
                           <input
                             type="number"
                             name="property_value"
@@ -365,8 +373,8 @@ const LoanApplicationPage: React.FC = () => {
 
             {/* Step 3: Employment Details */}
             {step === 3 && (
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">Employment Details</h2>
+              <div className="animate-fade-in">
+                <h2 className="text-lg font-medium text-primary-600 mb-6 tracking-tight">Employment Details</h2>
                 <div className="space-y-6">
                   <div>
                     <label className="label">Employment Type</label>
@@ -376,22 +384,22 @@ const LoanApplicationPage: React.FC = () => {
                           key={type.value}
                           type="button"
                           onClick={() => setFormData(prev => ({ ...prev, employment_type: type.value }))}
-                          className={`p-4 rounded-lg border-2 text-left transition-all ${
+                          className={`p-4 rounded-lg border-2 text-left transition-all duration-300 ${
                             formData.employment_type === type.value
-                              ? 'border-primary-600 bg-primary-50'
-                              : 'border-gray-200 hover:border-primary-300'
+                              ? 'border-primary-600 bg-surface-50'
+                              : 'border-neutral-200 hover:border-neutral-300'
                           }`}
                         >
                           <div className="flex items-center space-x-3">
-                            <Briefcase className={`w-5 h-5 ${
+                            <Briefcase className={`w-4 h-4 transition-colors duration-300 ${
                               formData.employment_type === type.value
                                 ? 'text-primary-600'
-                                : 'text-gray-600'
+                                : 'text-neutral-400'
                             }`} />
-                            <span className={`font-medium ${
+                            <span className={`font-medium text-sm transition-colors duration-300 ${
                               formData.employment_type === type.value
                                 ? 'text-primary-600'
-                                : 'text-gray-900'
+                                : 'text-neutral-700'
                             }`}>{type.label}</span>
                           </div>
                         </button>
@@ -400,9 +408,9 @@ const LoanApplicationPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="label">Monthly Income (Rs)</label>
+                    <label className="label">Monthly Income (₹)</label>
                     <div className="relative">
-                      <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <IndianRupee className="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
                       <input
                         type="number"
                         name="monthly_income"
@@ -414,7 +422,7 @@ const LoanApplicationPage: React.FC = () => {
                         required
                       />
                     </div>
-                    <p className="mt-1 text-sm text-gray-500">Minimum: Rs 10,000</p>
+                    <p className="mt-1.5 text-xs text-neutral-400">Minimum: ₹10,000</p>
                   </div>
                 </div>
               </div>
@@ -422,13 +430,13 @@ const LoanApplicationPage: React.FC = () => {
 
             {/* Step 4: Personal Details */}
             {step === 4 && (
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">Personal Details</h2>
+              <div className="animate-fade-in">
+                <h2 className="text-lg font-medium text-primary-600 mb-6 tracking-tight">Personal Details</h2>
                 <div className="space-y-6">
                   <div>
                     <label className="label">Full Name</label>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <User className="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
                       <input
                         type="text"
                         name="applicant_name"
@@ -443,17 +451,15 @@ const LoanApplicationPage: React.FC = () => {
 
                   <div>
                     <label className="label">Email Address</label>
-                    <div className="relative">
-                      <input
-                        type="email"
-                        name="applicant_email"
-                        value={formData.applicant_email}
-                        onChange={handleInputChange}
-                        className="input-field bg-gray-100"
-                        placeholder="Enter your email"
-                        disabled
-                      />
-                    </div>
+                    <input
+                      type="email"
+                      name="applicant_email"
+                      value={formData.applicant_email}
+                      onChange={handleInputChange}
+                      className="input-field bg-surface-100"
+                      placeholder="Enter your email"
+                      disabled
+                    />
                   </div>
 
                   <div>
@@ -473,12 +479,12 @@ const LoanApplicationPage: React.FC = () => {
             )}
 
             {/* Navigation Buttons */}
-            <div className="flex justify-between mt-8">
+            <div className="flex justify-between mt-10 pt-6 border-t border-neutral-200">
               {step > 1 && (
                 <button
                   type="button"
                   onClick={handleBack}
-                  className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                  className="px-6 py-3 border border-neutral-200 rounded text-neutral-600 font-medium text-sm hover:bg-surface-50 transition-all duration-300"
                 >
                   Back
                 </button>
@@ -488,7 +494,7 @@ const LoanApplicationPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="btn-primary ml-auto"
+                  className="btn-primary ml-auto text-sm"
                 >
                   Continue
                 </button>
@@ -496,11 +502,11 @@ const LoanApplicationPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="btn-primary ml-auto flex items-center"
+                  className="btn-primary ml-auto flex items-center text-sm"
                 >
                   {loading ? (
                     <>
-                      <svg className="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
@@ -508,7 +514,7 @@ const LoanApplicationPage: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      <FileText className="w-5 h-5 mr-2" />
+                      <FileText className="w-4 h-4 mr-2" />
                       Submit Application
                     </>
                   )}
