@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — GP Home Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0f2340;
+    --navy-mid: #1a3a5c;
+    --gold: #b8943e;
+    --gold-light: #d4aa5a;
+    --cream: #f9f6f0;
+    --cream-dark: #ede8df;
+    --text: #1c1c1c;
+    --text-muted: #5a5a5a;
+    --text-light: #888;
+    --border: rgba(15,35,64,0.12);
+    --radius: 4px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--navy);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 38px;
+    height: 38px;
+    background: var(--gold);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .logo-icon svg { width: 22px; height: 22px; }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .logo-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.01em;
+  }
+
+  .logo-tag {
+    font-size: 10px;
+    color: var(--gold-light);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  .header-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--navy);
+    padding: 72px 32px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(184,148,62,0.04) 40px,
+      rgba(184,148,62,0.04) 41px
+    );
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 10.5px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 20px;
+    padding: 6px 16px;
+    border: 1px solid rgba(184,148,62,0.4);
+    border-radius: 2px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    max-width: 480px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    font-weight: 400;
+  }
+
+  .meta-value {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    font-weight: 400;
+  }
+
+  /* ── Layout ── */
+  .page-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 32px 80px;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  /* ── Sidebar TOC ── */
+  .sidebar {
+    position: sticky;
+    top: 76px;
+  }
+
+  .toc-title {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    font-weight: 500;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .toc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .toc-list a {
+    display: block;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 6px 10px 6px 12px;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+    border-radius: 0 2px 2px 0;
+    font-weight: 300;
+    line-height: 1.4;
+  }
+
+  .toc-list a:hover {
+    color: var(--navy);
+    border-left-color: var(--gold);
+    background: rgba(184,148,62,0.06);
+  }
+
+  .toc-num {
+    font-size: 10px;
+    color: var(--gold);
+    font-weight: 500;
+    margin-right: 6px;
+  }
+
+  /* ── Content ── */
+  .content { min-width: 0; }
+
+  .section {
+    margin-bottom: 52px;
+    scroll-margin-top: 100px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    flex-shrink: 0;
+  }
+
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+
+  .section p {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    font-weight: 300;
+  }
+
+  .section p:last-child { margin-bottom: 0; }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .info-card {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+
+  .info-card-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .info-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .info-card ul li {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    padding-left: 14px;
+    position: relative;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .info-card ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 5px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .purpose-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  .purpose-list li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    font-size: 14.5px;
+    color: var(--text-muted);
+    font-weight: 300;
+  }
+
+  .purpose-icon {
+    width: 24px;
+    height: 24px;
+    background: rgba(184,148,62,0.12);
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .purpose-icon svg { width: 11px; height: 11px; }
+
+  .highlight-box {
+    background: rgba(184,148,62,0.08);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 16px 20px;
+    margin: 20px 0;
+  }
+
+  .highlight-box p {
+    font-size: 14px;
+    color: var(--navy-mid);
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .rights-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 20px 0;
+  }
+
+  .right-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .right-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--navy);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+
+  .right-text { font-size: 13.5px; color: var(--text-muted); font-weight: 300; line-height: 1.5; }
+  .right-title { font-weight: 500; color: var(--navy); font-size: 13.5px; display: block; margin-bottom: 2px; }
+
+  /* ── Footer ── */
+  footer {
+    background: var(--navy);
+    border-top: 2px solid var(--gold);
+    padding: 40px 32px;
+    text-align: center;
+  }
+
+  .footer-inner { max-width: 960px; margin: 0 auto; }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .footer-contact {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 6px;
+    font-weight: 300;
+  }
+
+  .footer-contact a {
+    color: var(--gold-light);
+    text-decoration: none;
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    margin-top: 20px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    .page-wrap {
+      grid-template-columns: 1fr;
+      padding: 32px 20px 60px;
+    }
+
+    .sidebar { position: static; display: none; }
+
+    .info-grid, .rights-grid { grid-template-columns: 1fr; }
+
+    .hero { padding: 48px 20px 40px; }
+
+    .header-inner { padding: 14px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 16V10L11 5L18 10V16C18 17.1 17.1 18 16 18H6C4.9 18 4 17.1 4 16Z" stroke="#ffffff" stroke-width="1.5" fill="none"/>
+          <path d="M9 18V13H13V18" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">GP Home Finance</span>
+        <span class="logo-tag">Trusted Lending</span>
+      </div>
+    </a>
+    <span class="header-label">Privacy Policy</span>
+  </div>
+</header>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-content">
+    <span class="hero-eyebrow">Legal Document</span>
+    <h1>Privacy Policy</h1>
+    <p class="hero-subtitle">How GP Home Finance collects, uses, and protects your personal information</p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Effective Date</span>
+        <span class="meta-value">1 May 2025</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Last Updated</span>
+        <span class="meta-value">1 May 2025</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Version</span>
+        <span class="meta-value">1.0</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── BODY ── -->
+<div class="page-wrap">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#s1"><span class="toc-num">01</span>Introduction</a></li>
+      <li><a href="#s2"><span class="toc-num">02</span>Information We Collect</a></li>
+      <li><a href="#s3"><span class="toc-num">03</span>How We Use Your Information</a></li>
+      <li><a href="#s4"><span class="toc-num">04</span>Sharing of Information</a></li>
+      <li><a href="#s5"><span class="toc-num">05</span>Data Security</a></li>
+      <li><a href="#s6"><span class="toc-num">06</span>Data Retention</a></li>
+      <li><a href="#s7"><span class="toc-num">07</span>Your Rights</a></li>
+      <li><a href="#s8"><span class="toc-num">08</span>Cookies & Tracking</a></li>
+      <li><a href="#s9"><span class="toc-num">09</span>Children's Privacy</a></li>
+      <li><a href="#s10"><span class="toc-num">10</span>Changes to This Policy</a></li>
+      <li><a href="#s11"><span class="toc-num">11</span>Contact Us</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="content">
+
+    <!-- 01 Introduction -->
+    <section class="section" id="s1">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Introduction</h2>
+      </div>
+      <p>GP Home Finance ("we," "our," or "us") is committed to protecting the privacy and security of your personal information. This Privacy Policy describes how we collect, use, disclose, and safeguard information obtained through our mobile application and related services (collectively, the "App").</p>
+      <p>By using GP Home Finance, you agree to the collection and use of information in accordance with this policy. If you do not agree with the terms herein, please discontinue use of the App.</p>
+      <div class="highlight-box">
+        <p>This policy applies to all users of GP Home Finance, including those accessing our services for home loan management, EMI tracking, financial planning, and related features.</p>
+      </div>
+    </section>
+
+    <!-- 02 Information We Collect -->
+    <section class="section" id="s2">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Information We Collect</h2>
+      </div>
+      <p>We collect information you provide directly, information collected automatically, and in some cases, information from third-party sources to deliver our services effectively.</p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-label">Personal Information</div>
+          <ul>
+            <li>Full name and date of birth</li>
+            <li>Email address and phone number</li>
+            <li>Home and mailing address</li>
+            <li>PAN / Aadhaar number (for KYC)</li>
+            <li>Identity and address proof documents</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Financial Information</div>
+          <ul>
+            <li>Income and employment details</li>
+            <li>Loan amount, tenure, and EMI data</li>
+            <li>Bank account information</li>
+            <li>Credit score and history</li>
+            <li>Property/collateral details</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Device & Usage Data</div>
+          <ul>
+            <li>Device type, OS, and version</li>
+            <li>App usage logs and session data</li>
+            <li>IP address and location data</li>
+            <li>Crash reports and diagnostics</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Communications</div>
+          <ul>
+            <li>Customer support queries</li>
+            <li>Feedback and survey responses</li>
+            <li>In-app messages and notifications</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 How We Use Your Information -->
+    <section class="section" id="s3">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>How We Use Your Information</h2>
+      </div>
+      <p>We use the information we collect for specific, legitimate purposes directly related to providing GP Home Finance services.</p>
+
+      <ul class="purpose-list">
+        <li>
+          <span class="purpose-icon">
+            <svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="#b8943e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          To process and manage home loan applications, disbursal, and repayments
+        </li>
+        <li>
+          <span class="purpose-icon">
+            <svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="#b8943e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          To verify your identity and complete Know Your Customer (KYC) obligations
+        </li>
+        <li>
+          <span class="purpose-icon">
+            <svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="#b8943e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          To provide EMI tracking, repayment schedules, and financial planning tools
+        </li>
+        <li>
+          <span class="purpose-icon">
+            <svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="#b8943e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          To send notifications about due dates, statements, and important account updates
+        </li>
+        <li>
+          <span class="purpose-icon">
+            <svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="#b8943e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          To comply with regulatory and legal requirements under applicable Indian laws
+        </li>
+        <li>
+          <span class="purpose-icon">
+            <svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="#b8943e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          To detect, prevent, and respond to fraud, security incidents, and misuse
+        </li>
+        <li>
+          <span class="purpose-icon">
+            <svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="#b8943e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          To improve our App features, performance, and user experience
+        </li>
+        <li>
+          <span class="purpose-icon">
+            <svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="#b8943e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          To provide customer support and respond to inquiries in a timely manner
+        </li>
+      </ul>
+
+      <p>We will not use your personal data for purposes incompatible with those described above without obtaining your prior consent.</p>
+    </section>
+
+    <!-- 04 Sharing of Information -->
+    <section class="section" id="s4">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>Sharing of Information</h2>
+      </div>
+      <p>We do not sell your personal information. We may share information with trusted third parties only under the following circumstances:</p>
+
+      <ul class="purpose-list">
+        <li>
+          <span class="purpose-icon">
+            <svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="#b8943e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span><strong style="color:#0f2340;font-weight:500;">Lending Partners & Banks:</strong> To process loan applications and facilitate fund transfers</span>
+        </li>
+        <li>
+          <span class="purpose-icon">
+            <svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="#b8943e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span><strong style="color:#0f2340;font-weight:500;">Credit Bureaus:</strong> To verify creditworthiness (e.g., CIBIL, Experian)</span>
+        </li>
+        <li>
+          <span class="purpose-icon">
+            <svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="#b8943e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span><strong style="color:#0f2340;font-weight:500;">KYC & Verification Agencies:</strong> For identity and document verification services</span>
+        </li>
+        <li>
+          <span class="purpose-icon">
+            <svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="#b8943e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span><strong style="color:#0f2340;font-weight:500;">Regulatory Authorities:</strong> As required by law, court orders, or regulatory directives (RBI, IRDAI, etc.)</span>
+        </li>
+        <li>
+          <span class="purpose-icon">
+            <svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="#b8943e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span><strong style="color:#0f2340;font-weight:500;">Service Providers:</strong> Cloud hosting, analytics, and communication platforms bound by confidentiality agreements</span>
+        </li>
+      </ul>
+
+      <p>All third parties are contractually bound to handle your data securely and only for the purposes for which it was shared.</p>
+    </section>
+
+    <!-- 05 Data Security -->
+    <section class="section" id="s5">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>Data Security</h2>
+      </div>
+      <p>We implement industry-standard technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-label">Technical Safeguards</div>
+          <ul>
+            <li>256-bit AES encryption at rest</li>
+            <li>TLS 1.3 encryption in transit</li>
+            <li>Multi-factor authentication</li>
+            <li>Regular security audits</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Organizational Measures</div>
+          <ul>
+            <li>Role-based access controls</li>
+            <li>Employee data privacy training</li>
+            <li>Incident response procedures</li>
+            <li>Vendor security assessments</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p>While we strive to protect your information, no system is completely secure. If you suspect unauthorized access to your account, please contact us immediately at privacy@gphomefinance.in</p>
+      </div>
+    </section>
+
+    <!-- 06 Data Retention -->
+    <section class="section" id="s6">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>Data Retention</h2>
+      </div>
+      <p>We retain your personal information for as long as necessary to fulfil the purposes outlined in this policy and to comply with applicable legal obligations.</p>
+      <p>Loan-related records and KYC documents are typically retained for a minimum of 8 years following loan closure, as required under Indian financial regulations. Account data and usage logs may be retained for up to 5 years. After the applicable retention period, data is securely deleted or anonymized.</p>
+      <p>You may request deletion of your account data; however, certain records may be retained where required by law or for legitimate business reasons such as dispute resolution.</p>
+    </section>
+
+    <!-- 07 Your Rights -->
+    <section class="section" id="s7">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2>Your Rights</h2>
+      </div>
+      <p>As a user of GP Home Finance, you have the following rights with respect to your personal information:</p>
+
+      <div class="rights-grid">
+        <div class="right-item">
+          <div class="right-dot"></div>
+          <div class="right-text">
+            <span class="right-title">Right to Access</span>
+            Request a copy of the personal data we hold about you
+          </div>
+        </div>
+        <div class="right-item">
+          <div class="right-dot"></div>
+          <div class="right-text">
+            <span class="right-title">Right to Correction</span>
+            Request correction of inaccurate or incomplete data
+          </div>
+        </div>
+        <div class="right-item">
+          <div class="right-dot"></div>
+          <div class="right-text">
+            <span class="right-title">Right to Deletion</span>
+            Request deletion of your data, subject to legal obligations
+          </div>
+        </div>
+        <div class="right-item">
+          <div class="right-dot"></div>
+          <div class="right-text">
+            <span class="right-title">Right to Withdraw Consent</span>
+            Withdraw consent at any time where processing is consent-based
+          </div>
+        </div>
+        <div class="right-item">
+          <div class="right-dot"></div>
+          <div class="right-text">
+            <span class="right-title">Right to Portability</span>
+            Receive your data in a structured, machine-readable format
+          </div>
+        </div>
+        <div class="right-item">
+          <div class="right-dot"></div>
+          <div class="right-text">
+            <span class="right-title">Right to Object</span>
+            Object to processing for direct marketing or profiling
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top:20px;">To exercise any of these rights, please contact our Data Protection Officer at <a href="mailto:privacy@gphomefinance.in" style="color:var(--gold);text-decoration:none;">privacy@gphomefinance.in</a>. We will respond within 30 days.</p>
+    </section>
+
+    <!-- 08 Cookies -->
+    <section class="section" id="s8">
+      <div class="section-header">
+        <span class="section-num">08</span>
+        <h2>Cookies &amp; Tracking</h2>
+      </div>
+      <p>Our App and website use cookies and similar tracking technologies to enhance functionality and analyze usage patterns.</p>
+      <p>We use session cookies (which expire when you close the App), persistent cookies (which remain until manually deleted), and analytics tools to understand how users interact with our services. You may disable cookies through your device or browser settings, though some App features may not function correctly as a result.</p>
+      <p>We do not engage in cross-site tracking or sell cookie data to advertisers.</p>
+    </section>
+
+    <!-- 09 Children's Privacy -->
+    <section class="section" id="s9">
+      <div class="section-header">
+        <span class="section-num">09</span>
+        <h2>Children's Privacy</h2>
+      </div>
+      <p>GP Home Finance is intended solely for adults aged 18 years and above. We do not knowingly collect or solicit personal information from individuals under the age of 18.</p>
+      <p>If we become aware that we have inadvertently collected personal information from a minor, we will take prompt steps to delete such data. If you believe we have collected information from a minor, please contact us immediately.</p>
+    </section>
+
+    <!-- 10 Changes -->
+    <section class="section" id="s10">
+      <div class="section-header">
+        <span class="section-num">10</span>
+        <h2>Changes to This Policy</h2>
+      </div>
+      <p>We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or for other operational reasons. When we make material changes, we will notify you through the App or via email, and update the "Last Updated" date at the top of this page.</p>
+      <p>We encourage you to review this policy periodically. Continued use of GP Home Finance after the effective date of changes constitutes your acceptance of the revised policy.</p>
+    </section>
+
+    <!-- 11 Contact -->
+    <section class="section" id="s11">
+      <div class="section-header">
+        <span class="section-num">11</span>
+        <h2>Contact Us</h2>
+      </div>
+      <p>If you have questions, concerns, or requests regarding this Privacy Policy or your personal data, please reach out to us:</p>
+
+      <div class="info-card" style="max-width:420px;margin-top:16px;">
+        <div class="info-card-label">Data Protection Officer</div>
+        <ul style="gap:8px;">
+          <li><strong style="color:var(--navy);font-weight:500;">GP Home Finance</strong></li>
+          <li>Email: privacy@gphomefinance.in</li>
+          <li>Phone: +91 98XXXXXXXX</li>
+          <li>Address: [Your registered address]</li>
+        </ul>
+      </div>
+
+      <p style="margin-top:16px;">We aim to respond to all privacy-related inquiries within 30 business days. If you are not satisfied with our response, you may escalate the matter to the relevant data protection authority.</p>
+    </section>
+
+  </main>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">GP Home Finance</div>
+    <p class="footer-contact">Questions? Email us at <a href="mailto:privacy@gphomefinance.in">privacy@gphomefinance.in</a></p>
+    <p class="footer-copy">&copy; 2025 GP Home Finance. All rights reserved. &nbsp;|&nbsp; Privacy Policy v1.0</p>
+  </div>
+</footer>
+
+</body>
+</html>
