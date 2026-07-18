@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import type { LoanApplication, ApplicationStatus } from '../types';
-import { requestReferralCode } from '../lib/referral'
 import {
   FileText,
   Clock,
