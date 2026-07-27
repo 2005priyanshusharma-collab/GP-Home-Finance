@@ -25,6 +25,7 @@ const LoginPage: React.FC = () => {
         navigate('/dashboard');
       }
     } catch (err) {
+      console.error('Login exception:', err);
       setError('An unexpected error occurred. Please try again.');
     } finally {
       setLoading(false);

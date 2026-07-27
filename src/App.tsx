@@ -9,6 +9,7 @@ import DashboardPage from './pages/DashboardPage';
 import LoanApplicationPage from './pages/LoanApplicationPage';
 import EMICalculatorPage from './pages/EMICalculatorPage';
 import ContactPage from './pages/ContactPage';
+import ApplicationDetailPage from './pages/ApplicationDetailPage';
 
 // Protected Route wrapper
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -89,6 +90,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <LoanApplicationPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/application/:id"
+              element={
+                <ProtectedRoute>
+                  <ApplicationDetailPage />
                 </ProtectedRoute>
               }
             />

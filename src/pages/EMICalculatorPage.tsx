@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Calculator, TrendingUp, IndianRupee, Clock, Percent } from 'lucide-react';
 
 interface AmortizationRow {
@@ -14,35 +14,18 @@ const EMICalculatorPage: React.FC = () => {
   const [interestRate, setInterestRate] = useState(8.35);
   const [tenure, setTenure] = useState(20);
 
-  const [emi, setEmi] = useState(0);
-  const [totalInterest, setTotalInterest] = useState(0);
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [amortizationSchedule, setAmortizationSchedule] = useState<AmortizationRow[]>([]);
-
-  useEffect(() => {
-    calculateEMI();
-  }, [loanAmount, interestRate, tenure]);
-
-  const calculateEMI = () => {
+  const { emi, totalInterest, totalAmount, amortizationSchedule } = useMemo(() => {
     const P = loanAmount;
     const r = interestRate / 100 / 12;
     const n = tenure * 12;
 
     if (P <= 0 || r <= 0 || n <= 0) {
-      setEmi(0);
-      setTotalInterest(0);
-      setTotalAmount(0);
-      setAmortizationSchedule([]);
-      return;
+      return { emi: 0, totalInterest: 0, totalAmount: 0, amortizationSchedule: [] };
     }
 
     const emiValue = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
     const totalAmountValue = emiValue * n;
     const totalInterestValue = totalAmountValue - P;
-
-    setEmi(emiValue);
-    setTotalInterest(totalInterestValue);
-    setTotalAmount(totalAmountValue);
 
     const schedule: AmortizationRow[] = [];
     let balance = P;
@@ -61,8 +44,13 @@ const EMICalculatorPage: React.FC = () => {
       });
     }
 
-    setAmortizationSchedule(schedule);
-  };
+    return {
+      emi: emiValue,
+      totalInterest: totalInterestValue,
+      totalAmount: totalAmountValue,
+      amortizationSchedule: schedule
+    };
+  }, [loanAmount, interestRate, tenure]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-IN', {

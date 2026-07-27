@@ -20,7 +20,8 @@ export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '');
 export const signUp = async (
   email: string,
   password: string,
-  fullName: string
+  fullName: string,
+  phone: string
 ) => {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -28,6 +29,7 @@ export const signUp = async (
     options: {
       data: {
         full_name: fullName,
+        phone: phone,
       },
     },
   });

@@ -39,7 +39,7 @@ const SignupPage: React.FC = () => {
     setLoading(true);
 
     try {
-      const result = await signUp(email, password, fullName);
+      const result = await signUp(email, password, fullName, phone);
 
       if (result.error) {
         setError(result.error.message || 'Failed to create account. Please try again.');
@@ -62,8 +62,9 @@ const SignupPage: React.FC = () => {
       if (session) {
         navigate('/dashboard');
       }
-    } catch (err: any) {
-      setError(err?.message || 'An unexpected error occurred. Please try again.');
+    } catch (err) {
+      const errorObj = err as Error;
+      setError(errorObj?.message || 'An unexpected error occurred. Please try again.');
     } finally {
       setLoading(false);
     }

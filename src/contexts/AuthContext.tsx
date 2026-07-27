@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase, getCurrentUser } from '../lib/supabase';
@@ -10,7 +11,8 @@ interface AuthContextType {
   signUp: (
     email: string,
     password: string,
-    fullName: string
+    fullName: string,
+    phone: string
   ) => Promise<{
     data: {
       user: User | null;
@@ -65,7 +67,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, []);
 
-  const handleSignUp = async (email: string, password: string, fullName: string) => {
+  const handleSignUp = async (email: string, password: string, fullName: string, phone: string) => {
     try {
       // Check if Supabase is configured
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -82,7 +84,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         email,
         password,
         options: {
-          data: { full_name: fullName },
+          data: {
+            full_name: fullName,
+            phone: phone,
+          },
           emailRedirectTo: 'https://www.gphomefinance.com/login'
         },
       });
